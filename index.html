@@ -19,19 +19,19 @@
         background-position: center; 
         background-repeat: no-repeat; 
         background-attachment: fixed; 
-        color: #fff; /* Default text color */
+        color: #fff;
     }
     h2 {
         text-align: center;
-        color: #000; /* Sets "GPA Calculator" text to black */
+        color: #000; 
     }
     .gpa-output {
-        color: #000; /* Sets "GPA: (gpa number)" text to black */
+        color: #000; 
     }
     table {
         width: 100%;
         margin-bottom: 20px;
-        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for better readability */
+        background-color: rgba(0, 0, 0, 0.6); 
         color: #fff;
         border-radius: 5px;
     }
@@ -64,7 +64,7 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Rows will be added here dynamically -->
+      
     </tbody>
 </table>
 
@@ -73,7 +73,6 @@
 <p class="gpa-output"><strong>GPA: </strong><span id="gpaOutput">0.00</span></p>
 
 <script>
-// Grade points for each letter grade
 const gradePoints = {
     'A+': 4.0, 'A': 4.0, 'A-': 3.7,
     'B+': 3.3, 'B': 3.0, 'B-': 2.7,
@@ -82,7 +81,6 @@ const gradePoints = {
     'F': 0.0
 };
 
-// Add a new row to the GPA table
 function addRow() {
     const table = document.getElementById('gpaTable').getElementsByTagName('tbody')[0];
     const newRow = document.createElement('tr');
@@ -114,21 +112,18 @@ function addRow() {
     table.appendChild(newRow);
 }
 
-// Delete a row from the GPA table
 function deleteRow(button) {
     const row = button.parentNode.parentNode;
     row.parentNode.removeChild(row);
     calculateGPA();
 }
 
-// Calculate GPA based on selected rows, or all if none selected
 function calculateGPA() {
     const rows = document.querySelectorAll('#gpaTable tbody tr');
     let totalPoints = 0;
     let totalCredits = 0;
     let anyRowSelected = false;
 
-    // Check if any row is selected
     rows.forEach(row => {
         if (row.querySelector('.select-row').checked) {
             anyRowSelected = true;
@@ -140,7 +135,6 @@ function calculateGPA() {
         const grade = row.querySelector('.grade-dropdown').value;
         const credits = parseFloat(row.querySelector('.credit-input').value);
 
-        // Include the row if it’s selected, or if no rows are selected
         if ((anyRowSelected && isChecked) || (!anyRowSelected && grade && credits)) {
             const points = gradePoints[grade] * credits;
             totalPoints += points;
@@ -151,7 +145,6 @@ function calculateGPA() {
     const gpa = totalCredits ? (totalPoints / totalCredits).toFixed(2) : "0.00";
     document.getElementById('gpaOutput').textContent = gpa;
 }
-// Reset the calculator by clearing checked rows or all if none selected
 function resetCalculator() {
     const rows = document.querySelectorAll('#gpaTable tbody tr');
     rows.forEach(row => {
@@ -165,7 +158,6 @@ function resetCalculator() {
     document.getElementById('gpaOutput').textContent = "0.00";
 }
 
-// Recalculate GPA every time there’s an input change
 document.getElementById('gpaTable').addEventListener('change', calculateGPA);
 </script>
 
