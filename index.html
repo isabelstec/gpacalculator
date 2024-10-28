@@ -88,7 +88,7 @@ function deleteRow(button) {
     calculateGPA();
 }
 
-// Calculate GPA based on selected or all non-empty rows
+// Calculate GPA based only on rows with checked checkboxes
 function calculateGPA() {
     const rows = document.querySelectorAll('#gpaTable tbody tr');
     let totalPoints = 0;
@@ -99,7 +99,8 @@ function calculateGPA() {
         const grade = row.querySelector('.grade-dropdown').value;
         const credits = parseFloat(row.querySelector('.credit-input').value);
 
-        if (grade && credits && (isChecked || !isChecked)) {
+        // Include in calculation only if the row is checked and has valid grade and credits
+        if (isChecked && grade && credits) {
             const points = gradePoints[grade] * credits;
             totalPoints += points;
             totalCredits += credits;
