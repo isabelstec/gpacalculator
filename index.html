@@ -121,19 +121,27 @@ function deleteRow(button) {
     calculateGPA();
 }
 
-// Calculate GPA based only on rows with checked checkboxes
+// Calculate GPA based on selected rows, or all if none selected
 function calculateGPA() {
     const rows = document.querySelectorAll('#gpaTable tbody tr');
     let totalPoints = 0;
     let totalCredits = 0;
+    let anyRowSelected = false;
+
+    // First, check if any row is selected
+    rows.forEach(row => {
+        if (row.querySelector('.select-row').checked) {
+            anyRowSelected = true;
+        }
+    });
 
     rows.forEach(row => {
         const isChecked = row.querySelector('.select-row').checked;
         const grade = row.querySelector('.grade-dropdown').value;
         const credits = parseFloat(row.querySelector('.credit-input').value);
 
-        // Include in calculation only if the row is checked and has valid grade and credits
-        if (isChecked && grade && credits) {
+        // Calculate GPA based on all rows if none selected, or only selected rows if any selected
+        if ((anyRowSelected && isChecked || !anyRowSelected) && grade && credits) {
             const points = gradePoints[grade] * credits;
             totalPoints += points;
             totalCredits += credits;
